@@ -10,6 +10,7 @@ import lombok.Setter;
 @Setter
 @Getter
 public class StudentGroup {
+    private Long id;
     private String course;
     private Integer semester;
 
@@ -21,6 +22,8 @@ public class StudentGroup {
             return false;
         if (getClass() != obj.getClass())
             return false;
+        if(this.getId().equals(((StudentGroup)obj).getId()))
+            return true;
         if(this.getCourse().equals(((StudentGroup) obj).getCourse())){
             return this.getSemester().intValue()==((StudentGroup) obj).getSemester().intValue();
         }

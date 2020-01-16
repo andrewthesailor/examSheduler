@@ -2,6 +2,7 @@ package com.aszczep.sheduler;
 
 import com.aszczep.sheduler.parameters.*;
 import com.aszczep.sheduler.searchAlgorythms.Backtrack;
+import com.aszczep.sheduler.searchAlgorythms.ForwardChecking;
 import com.aszczep.sheduler.variables.Timetable;
 import org.hibernate.mapping.Collection;
 import org.springframework.boot.SpringApplication;
@@ -58,7 +59,10 @@ public class ShedulerApplication {
 		List<Room> rooms = new ArrayList<>();
 		rooms.add(room);
 
-		Backtrack backtrack = new Backtrack(subjectList,rooms,timeslots1);
+		ForwardChecking backtrack = new ForwardChecking();
+		backtrack.setRooms(rooms);
+		backtrack.setSubjects(subjectList);
+		backtrack.setTimeslots(timeslots1);
 		Timetable timetable = backtrack.solve();
 		if(timetable!=null){
 			System.out.println("gut");

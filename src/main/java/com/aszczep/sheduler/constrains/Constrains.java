@@ -8,6 +8,8 @@ import com.aszczep.sheduler.variables.Timetable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public abstract class Constrains {
 
@@ -113,5 +115,16 @@ public abstract class Constrains {
             map.get(exam.getTimeslot()).add(exam);
         }
         return map;
+    }
+
+    public static boolean verifyTimeslotsForGroups(List<Timeslot> timeslotsLeft, List<Subject> subjectsLeft, Subject subjectToAssign) {
+        long subjectsInGroup = subjectsLeft.stream().filter(k->k.getStudentGroup().equals(subjectToAssign.getStudentGroup())).count();
+        if(subjectsInGroup==0)
+            return true;
+        Map<Integer,Integer> dayCounter = new HashMap<>();
+        for(Timeslot timeslot:timeslotsLeft){
+            dayCounter.putIfAbsent(timeslot.getDay(), 1);
+        }
+        return subjectsInGroup < dayCounter.size();
     }
 }
